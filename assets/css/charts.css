@@ -1,0 +1,151 @@
+:root {
+    --text: #333333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+html {
+    font-size: 62.5%; /* 16px이 100%, 62.5%는 10px */
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.head {
+    width: 90%;
+    margin: 1.5rem 0 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head > h2 {
+    color: var(--text);
+    font-family: 'NotoSans';
+    font-size: 3rem;
+    font-weight: bold;
+    border-bottom: 3px solid var(--text);
+    cursor: pointer;
+}
+
+.head > p {
+    font-size: 1.2rem;
+    border: 1px solid #ff59ea;
+    border-radius: 8px;
+    color: #ff59ea;
+    padding: 0.2rem 0.7rem;
+}
+
+.filters {
+    width: 90%;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.filters > h3 {
+    padding: 0.3rem;
+    margin: 0.2rem;
+    font-size: 1.3rem;
+    color: #363636;
+}
+
+.filters-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.date-range-btn {
+    padding: 0.3rem 0.6rem;
+    margin: 0.2rem;
+    background: #c65fff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.date-range-btn:hover {
+    background: #d994ff;
+}
+
+.sparklines {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.chart {
+    border: 1px solid #f2f2f2;
+    border-radius: 4px;
+    box-shadow: 2px 2px 3px #f2f2f2;
+    margin: 0.2rem;
+    padding: 0.5rem;
+}
+
+.chart:hover {
+    box-shadow: 3px 3px 4px #c9c9c9;
+}
+
+.chart > .title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #363636;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #f2f2f2;
+    text-align: center;
+}
+
+#view-more {
+    bottom: 0;
+    margin-top: 2rem;
+    background: #525252;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    height: 5rem;
+}
+
+#view-more:hover {
+    background: #878787;
+}
+
+@media only screen and (min-width: 401px) and (max-width: 960px) {
+    .sparklines {
+        width: 95%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media only screen and (min-width: 961px) and (max-width: 1200px) {
+    .filters {
+        width: 90%;
+        margin: 0 0 1.5rem 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .filters {
+        width: 90%;
+        margin: 0 0 1.5rem 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
