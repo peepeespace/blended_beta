@@ -12,8 +12,8 @@ const formatString = (stringValue, replacementsArray) => {
   return formatted;
 };
 
-const codelistURL = 'http://127.0.0.1:8081/api/codelist';
-const codeDataURL = 'http://127.0.0.1:8081/api/{0}';
+const codelistURL = 'http://api.blended.kr/codelist';
+const codeDataURL = 'http://api.blended.kr/adj_close/{0}';
 
 let CHART = {
   sparklineSection: document.getElementsByClassName('sparklines')[0],
@@ -24,10 +24,15 @@ let CHART = {
   </div>
   `,
   codelist: [],
+  codeNameDict: {},
   totalCodeNum: 0,
   chartDataDict: {},
-  filteredChartDataDict: {},
   dateFilter: 'ALL',
+  sizeFilter: '소',
+  showFilter: '코드',
+  chartWidth: '60px',
+  chartHeight: '25px',
+  cutNameIndex: 7,
   chartNum: 150,
   totalChartNumOnPage: 0
 }
@@ -59,8 +64,32 @@ const getCodelist = async () => {
 
 const getCodeData = async (code) => {
   const codeData = await Axios.get(formatString(codeDataURL, [code]));
-  return Object.values(codeData.data);
+  CHART.codeNameDict[code] = codeData.data.name;
+  return Object.values(codeData.data.data);
 };
+
+const getDateFilteredCodeData = (codeData, filter) => {
+  let filterLength;
+  let chartCodeData;
+
+  if (filter == 'ALL') {
+    filterLength = codeData.length;
+  } else if (filter == '1M') {
+    filterLength = 20;
+  } else if (filter == '3M') {
+    filterLength = 60;
+  } else if (filter == '1Y') {
+    filterLength = 240;
+  } else if (filter == '3Y') {
+    filterLength = 240 * 3;
+  } else if (filter == '5Y') {
+    filterLength = 240 * 5;
+  } else if (filter == '10Y') {
+    filterLength = 240 * 10;
+  }
+  chartCodeData = codeData.slice(Math.max(codeData.length - filterLength, 0));
+  return chartCodeData;
+}
 
 const main = async () => {
   const sparklineSection = CHART.sparklineSection;
@@ -70,46 +99,73 @@ const main = async () => {
   if (CHART.totalChartNumOnPage == 0) {
     let renderList = CHART.codelist.slice(CHART.totalChartNumOnPage, CHART.chartNum * 2);
     for (let code of renderList) {
-      html += formatString(CHART.chartSectionHTML, [code, code]);
+      if (CHART.showFilter == '코드') {
+        html += formatString(CHART.chartSectionHTML, [code, code]);
+      } else if (CHART.showFilter == '이름') {
+        html += formatString(CHART.chartSectionHTML, [CHART.codeNameDict[code].slice(0, CHART.cutNameIndex), code]);
+      }
     }
     sparklineSection.innerHTML = html;
     for (let code of renderList) {
       getCodeData(code).then((codeData) => {
         CHART.chartDataDict[code] = codeData;
-        createSparkline('#' + code, '60px', '25px', codeData);
+        let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
+        createSparkline('#' + code, CHART.chartWidth, CHART.chartHeight, chartCodeData);
       });
     }
     CHART.totalChartNumOnPage += CHART.chartNum * 2;
   }
 };
 
-window.addEventListener('load', async () => {
+const addCharts = async () => {
+  const sparklineSection = CHART.sparklineSection;
+  let html = '';
+  let from = CHART.totalChartNumOnPage;
+  let to = CHART.totalChartNumOnPage + CHART.chartNum;
+  if (to > CHART.totalCodeNum) {
+    to = CHART.totalCodeNum;
+  }
+  let renderList = CHART.codelist.slice(from, to);
+  for (let code of renderList) {
+    html += formatString(CHART.chartSectionHTML, [code, code]);
+  }
+  sparklineSection.insertAdjacentHTML('beforeend', html);
+  for (let code of renderList) {
+    getCodeData(code).then((codeData) => {
+      CHART.chartDataDict[code] = codeData;
+      let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
+      createSparkline('#' + code, CHART.chartWidth, CHART.chartHeight, chartCodeData);
+    });
+  }
+  CHART.totalChartNumOnPage += CHART.chartNum;
+};
 
-  const addCharts = async () => {
-    const sparklineSection = CHART.sparklineSection;
-    let html = '';
-    let from = CHART.totalChartNumOnPage;
-    let to = CHART.totalChartNumOnPage + CHART.chartNum;
-    if (to > CHART.totalCodeNum) {
-      to = CHART.totalCodeNum;
-    }
-    let renderList = CHART.codelist.slice(from, to);
-    for (let code of renderList) {
+const redrawPageCharts = () => {
+  const sparklineSection = CHART.sparklineSection;
+  let html = '';
+  let from = 0;
+  let to = CHART.totalChartNumOnPage;
+  let renderList = CHART.codelist.slice(from, to);
+  for (let code of renderList) {
+    if (CHART.showFilter == '코드') {
       html += formatString(CHART.chartSectionHTML, [code, code]);
+    } else if (CHART.showFilter == '이름') {
+      html += formatString(CHART.chartSectionHTML, [CHART.codeNameDict[code].slice(0, CHART.cutNameIndex), code]);
     }
-    sparklineSection.insertAdjacentHTML('beforeend', html);
-    for (let code of renderList) {
-      getCodeData(code).then((codeData) => {
-        CHART.chartDataDict[code] = codeData;
-        createSparkline('#' + code, '60px', '25px', codeData);
-      });
-    }
-    CHART.totalChartNumOnPage += CHART.chartNum;
-  };
+  }
+  sparklineSection.innerHTML = '';
+  sparklineSection.insertAdjacentHTML('beforeend', html);
+  for (let code of renderList) {
+    let codeData = CHART.chartDataDict[code];
+    let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
+    createSparkline('#' + code, CHART.chartWidth, CHART.chartHeight, chartCodeData);
+  }
+};
 
-  // window.addEventListener('resize', (event) => {
-  //   console.log(window.innerWidth);
-  // });
+//////////////////////
+///// MAIN EVENT /////
+//////////////////////
+window.addEventListener('load', async () => {
 
   const moreBtn = document.getElementById('view-more');
 
@@ -117,17 +173,73 @@ window.addEventListener('load', async () => {
     await addCharts();
   });
 
+  await main();
+
   const dateRangeBtns = document.getElementsByClassName('date-range-btn');
 
   for (let btn of dateRangeBtns) {
     btn.addEventListener('click', (event) => {
       CHART.dateFilter = btn.innerText;
-      for (let code in CHART.chartDataDict) {
-        console.log(code);
+      redrawPageCharts();
+    });
+  }
+
+  const chartSizeBtns = document.getElementsByClassName('chart-style-btn');
+
+  for (let btn of chartSizeBtns) {
+    btn.addEventListener('click', (event) => {
+      if (CHART.sizeFilter != btn.innerText) {
+        CHART.sizeFilter = btn.innerText;
+        if (CHART.sizeFilter == '소') {
+          CHART.chartWidth = '60px'
+          CHART.chartHeight = '25px'
+          CHART.cutNameIndex = 7
+        } else if (CHART.sizeFilter == '중') {
+          CHART.chartWidth = '100px'
+          CHART.chartHeight = '45px'
+          CHART.cutNameIndex = 12
+        } else if (CHART.sizeFilter == '대') {
+          CHART.chartWidth = '200px'
+          CHART.chartHeight = '95px'
+          CHART.cutNameIndex = 20
+        }
+        redrawPageCharts();
       }
     });
   }
 
-  main();
+  const chartNameBtns = document.getElementsByClassName('chart-name-btn');
 
+  for (let btn of chartNameBtns) {
+    btn.addEventListener('click', (event) => {
+      CHART.showFilter = btn.innerText;
+      redrawPageCharts();
+    });
+  }
+
+  // Get the modal
+  var modal = document.getElementById("myModal");
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("main-modal");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks the button, open the modal 
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
 });

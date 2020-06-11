@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 var cors = require('cors');
-const { RedisClient } = require('./src/cache.js');
 
 const PORT = 8082;
 const HOST = '0.0.0.0';
@@ -18,10 +17,6 @@ app.use(express.static(`${__dirname}/dist`)); // CSS 파일 연결
 app.listen(PORT, HOST);
 console.log(`서버가 http://${HOST}:${PORT} 에서 작동하고 있습니다.`);
 
-// Redis 인스턴스 만들기
-const r = new RedisClient();
-r.auth();
-
 // //////////////////////////
 // // URL 정의는 여기서 부터 ////
 // /////////////////////////
@@ -34,21 +29,4 @@ r.auth();
 
 app.get('/', (req, res) => {
   res.render('charts.html');
-});
-
-app.get('/api/codelist', async (req, res) => {
-  let codelist = await r.getList('codelist', 'str');
-  res.json(codelist);
-});
-
-app.get('/api/:code', async (req, res) => {
-  let code = req.params.code;
-  let codelist = await r.getList('codelist', 'str');
-  if (codelist.includes(code)) {
-      let jsonData = await r.redisClient.get(code);
-      jsonData = JSON.parse(jsonData);
-      res.json(jsonData);
-  } else {
-    res.send({'Error': 'No such data'})
-  }
 });
