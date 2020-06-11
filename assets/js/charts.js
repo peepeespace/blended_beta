@@ -78,6 +78,8 @@ const getDateFilteredCodeData = (codeData, filter) => {
     filterLength = 20;
   } else if (filter == '3M') {
     filterLength = 60;
+  } else if (filter == '6M') {
+    filterLength = 120;
   } else if (filter == '1Y') {
     filterLength = 240;
   } else if (filter == '3Y') {
