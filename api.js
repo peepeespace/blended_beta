@@ -45,3 +45,14 @@ app.get('/adj_close/:code', async (req, res) => {
     res.send({'Error': 'No such data'});
   }
 });
+
+app.get('/close_by_date/:date', async (req, res) => {
+  let date = req.params.date;
+  let jsonData = await r.redisClient.get(date);
+  if (jsonData == null) {
+    res.send({'Error': 'No such data'});
+  } else {
+    jsonData = JSON.parse(jsonData);
+    res.json(jsonData);
+  }
+});
