@@ -15,6 +15,16 @@
     font-family: 'Noto Sans KR', sans-serif;
 }
 
+::-moz-selection {
+    color: #ff7675;
+    background: #fdcb6e;
+}
+  
+::selection {
+    color: #ff7675;
+    background: #fdcb6e;
+}
+
 html {
     font-size: 62.5%; /* 16px이 100%, 62.5%는 10px */
     background: #fafafa;
