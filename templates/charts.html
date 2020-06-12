@@ -7,10 +7,13 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Blended</title>
-        <meta name="description" content="">
+        <meta name="description" content="금융 데이터 분석 및 시각화, financial data analysis and visualization">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel=" shortcut icon" href="blended_high.ico">
+        <link rel="icon" href="blended_high.ico">
         <script type="text/javascript" src="charts.min.js" async defer></script>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,800;1,700;1,800;1,900&display=swap" rel="stylesheet">
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -34,10 +37,19 @@
         </div>
 
         <div class="container">
-            <div class="head">
-                <h2>B</h2>
-                <p id="main-modal">🤳 모든 주식 정보를 한 곳에서</p>
-            </div>
+            <header>
+                <div class="navbar">
+                    <div class="info">
+                        <h2>B</h2>
+                        <div class="services">
+                            <button class="service">서비스</button>
+                            <button class="service">키스톤</button>
+                            <button class="service">블로그</button>
+                        </div>
+                    </div>
+                    <p id="main-modal">🤳 모든 주식 정보를 한 곳에서</p>    
+                </div>
+            </header>
             <div class="all-filters">
                 <div class="filters">
                     <h3>CHART STYLE :</h3>
@@ -81,9 +93,14 @@
                     </ul>
                 </div>
             </div>
-            <div class="sparklines"></div>
-            <button id="view-more">더보기</button>
+            <div class="chart-wrapper">
+                <div class="sparklines"></div>
+            </div>
+            <div class="extra-space">
+                <button id="view-more">더보기</button>
+            </div>
         </div>
+
         <footer>
             <div class="footer-content">
                 <p>Blended ©️ 🙏🇰🇷 (2020) By : PP & KH & HM</p>
