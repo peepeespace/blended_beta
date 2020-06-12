@@ -12,8 +12,8 @@ const formatString = (stringValue, replacementsArray) => {
   return formatted;
 };
 
-const codelistURL = 'http://api.blended.kr/codelist';
-const codeDataURL = 'http://api.blended.kr/adj_close/{0}';
+const codelistURL = 'https://api.blended.kr/codelist';
+const codeDataURL = 'https://api.blended.kr/adj_close/{0}';
 
 let CHART = {
   sparklineSection: document.getElementsByClassName('sparklines')[0],
