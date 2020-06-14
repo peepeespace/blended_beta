@@ -30,3 +30,7 @@ console.log(`서버가 http://${HOST}:${PORT} 에서 작동하고 있습니다.`
 app.get('/', (req, res) => {
   res.render('charts.html');
 });
+
+app.get('/service', (req, res) => {
+  res.render('about.html');
+});

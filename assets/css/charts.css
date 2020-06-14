@@ -369,8 +369,7 @@ footer {
         width: 100%;
         margin: 2rem 0 0 0;
         border-radius: 0;
-        background: rgb(110,110,110);
-        background: radial-gradient(circle, rgba(110,110,110,1) 36%, rgba(51,51,51,1) 96%);
+        background: #525252;
     }
 }
 

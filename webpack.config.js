@@ -3,7 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        charts: ['@babel/polyfill', './assets/js/charts.js']
+        charts: ['@babel/polyfill', './assets/js/charts.js'],
+        about: ['@babel/polyfill', './assets/js/about.js']
     },
     devServer: {
         contentBase: './dist'
@@ -41,6 +42,11 @@ module.exports = {
           filename: 'charts.html',
           template: './templates/charts.html',
           inject: false
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'about.html',
+        template: './templates/about.html',
+        inject: false
       })
     ]
   };

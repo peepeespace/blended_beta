@@ -3,6 +3,8 @@ window.$ = window.jQuery = require('jquery');
 const sparkline = require('./sparkline.min.js');
 import Axios from 'axios';
 
+// https://atomiks.github.io/tippyjs/ --> 툴팁 적용하기
+
 const formatString = (stringValue, replacementsArray) => {
   let formatted = stringValue;
   for (let i = 0; i < replacementsArray.length; i += 1) {
@@ -168,6 +170,22 @@ const redrawPageCharts = () => {
 ///// MAIN EVENT /////
 //////////////////////
 window.addEventListener('load', async () => {
+
+  const logo = document.getElementById('logo');
+
+  logo.addEventListener('click', (event) => {
+    window.location.href = "/service";
+  });
+
+  const serviceBtns = document.getElementsByClassName('service');
+
+  for (let serviceBtn of serviceBtns) {
+    serviceBtn.addEventListener('click', (event) => {
+      if (serviceBtn.innerText == '서비스') {
+        window.location.href = "/service";
+      }
+    });
+  }
 
   const moreBtn = document.getElementById('view-more');
 
