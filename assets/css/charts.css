@@ -154,10 +154,15 @@ header {
 .services > button {
     border: none;
     background: none;
+    outline: none;
     color: var(--text);
     margin: 0 0.8rem;
     cursor: pointer;
     font-size: 1.3rem;
+}
+
+.services > button:focus {
+    outline: none;
 }
 
 .services > button:hover {

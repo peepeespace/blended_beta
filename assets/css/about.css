@@ -35,6 +35,10 @@ button {
     cursor: pointer;
 }
 
+button:focus {
+    outline: none;
+}
+
 ::-moz-selection {
     color: var(--shade-text-pink);
     background: var(--orange);
