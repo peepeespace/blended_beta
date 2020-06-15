@@ -1,5 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -18,7 +21,11 @@ module.exports = {
       rules: [
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader']
+          use: [
+            // 'style-loader',
+            MiniCssExtractPlugin.loader,
+            'css-loader'
+          ]
         },
         {
             test: /\.js$/,
@@ -37,6 +44,12 @@ module.exports = {
         }
       ]
     },
+    optimization: {
+      minimizer: [
+        new OptimizeCssAssetsPlugin(),
+        new TerserPlugin()
+      ]
+    },
     plugins: [
       new HtmlWebpackPlugin({
           filename: 'charts.html',
@@ -47,6 +60,7 @@ module.exports = {
         filename: 'about.html',
         template: './templates/about.html',
         inject: false
-      })
+      }),
+      new MiniCssExtractPlugin({filename: '[name].min.css'})
     ]
   };
