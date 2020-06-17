@@ -31,7 +31,7 @@ let CHART = {
   chartDataDict: {},
   dateFilter: 'ALL',
   sizeFilter: '소',
-  showFilter: '코드',
+  showFilter: '이름',
   chartWidth: '60px',
   chartHeight: '25px',
   cutNameIndex: 6,
@@ -40,6 +40,7 @@ let CHART = {
 }
 
 const createSparkline = (chartID, width, height, data) => {
+  console.log(chartID);
   $(chartID).sparkline(data, {
     type: 'line',
     // barColor: 'green',
@@ -98,24 +99,27 @@ const getDateFilteredCodeData = (codeData, filter) => {
 
 const main = async () => {
   const sparklineSection = CHART.sparklineSection;
-  CHART.codelist = await getCodelist('stock');
+  CHART.codelist = await getCodelist('test');
   CHART.totalCodeNum = CHART.codelist.length;
   let html = '';
   if (CHART.totalChartNumOnPage == 0) {
     let renderList = CHART.codelist.slice(CHART.totalChartNumOnPage, CHART.chartNum * 2);
     for (let code of renderList) {
+      let ticker = code.split('|')[0];
+      let name = code.split('|')[1];
       if (CHART.showFilter == '코드') {
-        html += formatString(CHART.chartSectionHTML, [code, code]);
+        html += formatString(CHART.chartSectionHTML, [ticker, ticker]);
       } else if (CHART.showFilter == '이름') {
-        html += formatString(CHART.chartSectionHTML, [CHART.codeNameDict[code].slice(0, CHART.cutNameIndex), code]);
+        html += formatString(CHART.chartSectionHTML, [name.slice(0, CHART.cutNameIndex), ticker]);
       }
     }
     sparklineSection.innerHTML = html;
     for (let code of renderList) {
-      getCodeData(code).then((codeData) => {
-        CHART.chartDataDict[code] = codeData;
+      let ticker = code.split('|')[0];
+      getCodeData(ticker).then((codeData) => {
+        CHART.chartDataDict[ticker] = codeData;
         let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
-        createSparkline('#' + code, CHART.chartWidth, CHART.chartHeight, chartCodeData);
+        createSparkline('#' + ticker, CHART.chartWidth, CHART.chartHeight, chartCodeData);
       });
     }
     CHART.totalChartNumOnPage += CHART.chartNum * 2;
@@ -132,14 +136,21 @@ const addCharts = async () => {
   }
   let renderList = CHART.codelist.slice(from, to);
   for (let code of renderList) {
-    html += formatString(CHART.chartSectionHTML, [code, code]);
+    let ticker = code.split('|')[0];
+    let name = code.split('|')[1];
+    if (CHART.showFilter == '코드') {
+      html += formatString(CHART.chartSectionHTML, [ticker, ticker]);
+    } else if (CHART.showFilter == '이름') {
+      html += formatString(CHART.chartSectionHTML, [name.slice(0, CHART.cutNameIndex), ticker]);
+    }
   }
   sparklineSection.insertAdjacentHTML('beforeend', html);
   for (let code of renderList) {
-    getCodeData(code).then((codeData) => {
-      CHART.chartDataDict[code] = codeData;
+    let ticker = code.split('|')[0];
+    getCodeData(ticker).then((codeData) => {
+      CHART.chartDataDict[ticker] = codeData;
       let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
-      createSparkline('#' + code, CHART.chartWidth, CHART.chartHeight, chartCodeData);
+      createSparkline('#' + ticker, CHART.chartWidth, CHART.chartHeight, chartCodeData);
     });
   }
   CHART.totalChartNumOnPage += CHART.chartNum;
@@ -152,18 +163,21 @@ const redrawPageCharts = () => {
   let to = CHART.totalChartNumOnPage;
   let renderList = CHART.codelist.slice(from, to);
   for (let code of renderList) {
+    let ticker = code.split('|')[0];
+    let name = code.split('|')[1];
     if (CHART.showFilter == '코드') {
-      html += formatString(CHART.chartSectionHTML, [code, code]);
+      html += formatString(CHART.chartSectionHTML, [ticker, ticker]);
     } else if (CHART.showFilter == '이름') {
-      html += formatString(CHART.chartSectionHTML, [CHART.codeNameDict[code].slice(0, CHART.cutNameIndex), code]);
+      html += formatString(CHART.chartSectionHTML, [name.slice(0, CHART.cutNameIndex), ticker]);
     }
   }
   sparklineSection.innerHTML = '';
   sparklineSection.insertAdjacentHTML('beforeend', html);
   for (let code of renderList) {
-    let codeData = CHART.chartDataDict[code];
+    let ticker = code.split('|')[0];
+    let codeData = CHART.chartDataDict[ticker];
     let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
-    createSparkline('#' + code, CHART.chartWidth, CHART.chartHeight, chartCodeData);
+    createSparkline('#' + ticker, CHART.chartWidth, CHART.chartHeight, chartCodeData);
   }
 };
 
