@@ -7,7 +7,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
     entry: {
         charts: ['@babel/polyfill', './assets/js/charts.js'],
-        about: ['@babel/polyfill', './assets/js/about.js']
+        about: ['@babel/polyfill', './assets/js/about.js'],
+        keystone: ['@babel/polyfill', './assets/js/keystone.js']
     },
     devServer: {
         contentBase: './dist'
@@ -59,6 +60,11 @@ module.exports = {
       new HtmlWebpackPlugin({
         filename: 'about.html',
         template: './templates/about.html',
+        inject: false
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'keystone.html',
+        template: './templates/keystone.html',
         inject: false
       }),
       new MiniCssExtractPlugin({filename: '[name].min.css'})

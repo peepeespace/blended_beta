@@ -29,8 +29,22 @@ app.get('/', (req, res) => {
     res.send({'Status': 'API works'})    
 });
 
-app.get('/codelist', async (req, res) => {
-  let codelist = await r.getList('codelist', 'str');
+app.get('/codelist/:type', async (req, res) => {
+  let type = req.params.type;
+  let codelist;
+  if (type == 'all') {
+    codelist = await r.getList('codelist', 'str');
+  } else if (type == 'stock') {
+    codelist = await r.getList('stock_codelist', 'str');
+  } else if (type == 'etf') {
+    codelist = await r.getList('etf_codelist', 'str');
+  } else if (type == 'putcall') {
+    codelist = await r.getList('putcall_codelist', 'str');
+  } else if (type == 'spac') {
+    codelist = await r.getList('spac_codelist', 'str');
+  } else if (type == 'etn') {
+    codelist = await r.getList('etn_codelist', 'str')
+  }
   res.json(codelist);
 });
 
