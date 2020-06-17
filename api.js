@@ -52,14 +52,9 @@ app.get('/codelist/:type', async (req, res) => {
 
 app.get('/adj_close/:code', async (req, res) => {
   let code = req.params.code;
-  let codelist = await r.getList('codelist', 'str');
-  if (codelist.includes(code)) {
-    let jsonData = await r.redisClient.get(code);
-    jsonData = JSON.parse(jsonData);
-    res.json(jsonData);
-  } else {
-    res.send({'Error': 'No such data'});
-  }
+  let jsonData = await r.redisClient.get(code);
+  jsonData = JSON.parse(jsonData);
+  res.json(jsonData);
 });
 
 app.get('/close_by_date/:date', async (req, res) => {
