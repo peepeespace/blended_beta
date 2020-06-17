@@ -44,6 +44,8 @@ app.get('/codelist/:type', async (req, res) => {
     codelist = await r.getList('spac_codelist', 'str');
   } else if (type == 'etn') {
     codelist = await r.getList('etn_codelist', 'str')
+  } else if (type == 'test') {
+    codelist = await r.getList('test_codelist', 'str');
   }
   res.json(codelist);
 });

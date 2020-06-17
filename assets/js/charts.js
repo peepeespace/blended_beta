@@ -14,7 +14,7 @@ const formatString = (stringValue, replacementsArray) => {
   return formatted;
 };
 
-const codelistURL = 'https://api.blended.kr/codelist/all';
+const codelistURL = 'https://api.blended.kr/codelist/{0}';
 const codeDataURL = 'https://api.blended.kr/adj_close/{0}';
 
 let CHART = {
@@ -34,7 +34,7 @@ let CHART = {
   showFilter: '코드',
   chartWidth: '60px',
   chartHeight: '25px',
-  cutNameIndex: 7,
+  cutNameIndex: 6,
   chartNum: 150,
   totalChartNumOnPage: 0
 }
@@ -59,8 +59,9 @@ const createSparkline = (chartID, width, height, data) => {
   });
 };
 
-const getCodelist = async () => {
-  const codelist = await Axios.get(codelistURL);
+const getCodelist = async (type) => {
+  let url = formatString(codelistURL, [type])
+  const codelist = await Axios.get(url);
   return codelist.data;
 };
 
@@ -97,7 +98,7 @@ const getDateFilteredCodeData = (codeData, filter) => {
 
 const main = async () => {
   const sparklineSection = CHART.sparklineSection;
-  CHART.codelist = await getCodelist();
+  CHART.codelist = await getCodelist('stock');
   CHART.totalCodeNum = CHART.codelist.length;
   let html = '';
   if (CHART.totalChartNumOnPage == 0) {
@@ -213,7 +214,7 @@ window.addEventListener('load', async () => {
         if (CHART.sizeFilter == '소') {
           CHART.chartWidth = '60px'
           CHART.chartHeight = '25px'
-          CHART.cutNameIndex = 7
+          CHART.cutNameIndex = 6
         } else if (CHART.sizeFilter == '중') {
           CHART.chartWidth = '100px'
           CHART.chartHeight = '45px'
@@ -221,7 +222,7 @@ window.addEventListener('load', async () => {
         } else if (CHART.sizeFilter == '대') {
           CHART.chartWidth = '200px'
           CHART.chartHeight = '95px'
-          CHART.cutNameIndex = 20
+          CHART.cutNameIndex = 24
         }
         redrawPageCharts();
       }
@@ -234,6 +235,14 @@ window.addEventListener('load', async () => {
     btn.addEventListener('click', (event) => {
       CHART.showFilter = btn.innerText;
       redrawPageCharts();
+    });
+  }
+
+  const marketTypeBtns = document.getElementsByClassName('market-type-btn');
+
+  for (let btn of marketTypeBtns) {
+    btn.addEventListener('click', (event) => {
+      console.log(btn.innerText);
     });
   }
 
