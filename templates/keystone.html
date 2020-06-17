@@ -5,14 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169300832-1"></script>
+        <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169300832-1"></script>
         <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'UA-169300832-1');
-        </script>
+        </script> -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Blended + Keystone</title>
@@ -33,7 +33,7 @@
         <div class="container">
             <header>
                 <div class="logos">
-                    <h2 id="logo">Blended</h2> <p>➕</p> <img src="keyst.png" alt="keystone">
+                    <h2 id="logo">Blended</h2> <p>➕</p> <img id="keyst-logo" src="keyst.png" alt="keystone">
                 </div>
             </header>
 
@@ -47,7 +47,7 @@
                     <div class="emerging-market">
                         <div class="main">
                             <div class="content">
-                                <h3>소개합니다. 투자의 리트머스지.</h3>
+                                <h3>소개합니다. 경제의 리트머스지.</h3>
                                 <h4>📈 신흥국 투자 지표 Prototype</h4>
                             </div>
                             <div class="gradient-bar">
@@ -60,12 +60,54 @@
                             </div>
                         </div>
                         <div class="sub">
-                            <h4>지표 활용법</h4>
-                            <p>신흥국 지표는 경제의 흐름을 나타내는 주요 지표들을 조합하여 만들었습니다.</p>
-                            <p>아래와 같이 안정적인 수익을 자랑하는 지수에 투자도 할 수 있으며,</p>
-                            <p>위의 탐욕 지수를 활용하여 투자에 활용할 수도 있습니다.</p>
+                            <div class="main-content">
+                                <h4>지표 활용법</h4>
+                                <p>신흥국 지표는 경제의 흐름을 나타내는 주요 지표들을 조합하여 만들었습니다.</p>
+                                <p>경제의 흐름을 이해하기 위해서는 4가지가 필요합니다.</p>
+                            </div>
+                            <div class="factor">
+                                <div class="title">실물경기 (Supply & Demand)</div>
+                                <div class="info">
+                                    <div class="description">
+                                        실물 경제는 산업재 금속 가격, 원자재 가격, 수출 지표 등을 활용하여 파악할 수 있습니다.
+                                    </div>
+                                    <div id="sd-chart" class="factor-chart"></div>
+                                </div>
+                            </div>
+                            <div class="factor">
+                                <div class="title">기업경기 (Business Cycle)</div>
+                                <div class="info">
+                                    <div class="description">
+                                        건설업, 제조업, 기술업의 현황을 보면 기업경기를 볼 수 있습니다.
+                                    </div>
+                                    <div id="business-chart" class="factor-chart"></div>
+                                </div>
+                            </div>
+                            <div class="factor">
+                                <div class="title">환율 (Currency)</div>
+                                <div class="info">
+                                    <div class="description">
+                                        환율은 각 국가의 경제상황을 나타내는 주요 변수 중 하나입니다.
+                                    </div>
+                                    <div id="currency-chart" class="factor-chart"></div>
+                                </div>
+                            </div>
+                            <div class="factor">
+                                <div class="title">리스크 (Risk)</div>
+                                <div class="info">
+                                    <div class="description">
+                                        모든 조건이 우호적일 때 위험에 대한 선호가 나타납니다.
+                                    </div>
+                                    <div id="risk-chart" class="factor-chart"></div>
+                                </div>
+                            </div>
                         </div>
-                        <button id="em-more-info-btn">더 알아보기</button>
+                        <div class="extra">
+                            <h4>투자에 어떻게 활용하나요? 😎</h4>
+                            <p>경기의 흐름을 알고 주식/지수의 상승에 올라타는게 현명한 투자자의 자세입니다.</p>
+                            <p>신흥국 투자 지표는 일정한 레인지를 가지고 위아래로 왔다갔다 합니다.</p>
+                            <p>보통 주식이 상승할 때는 지표도 상승하고, 주식이 바닥을 다질 때 지표도 범위의 하단선에 닿습니다.</p>
+                        </div>
                     </div>
                 </section>
             </article>

@@ -112,6 +112,10 @@ header {
     padding-bottom: 1rem;
 }
 
+#logo, #keyst-logo {
+    cursor: pointer;
+}
+
 article {
     width: 100%;
     padding: 2rem 0;
@@ -243,10 +247,66 @@ article {
     padding: 1rem;
 }
 
-.sub > h4 {
-    font-size: 2rem;
+.main-content {
+    margin-bottom: 2rem;
 }
 
+.main-content > h4 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+}
+
+.main-content > p {
+    font-size: 1.3rem;
+    color: var(--text-light);
+}
+
+.factor {
+    margin: 1rem 0;
+    padding: 1rem 0;
+}
+
+.factor > .title {
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.factor > .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.factor > .info > .description {
+    color: var(--text-light);
+    width: 50%;
+    font-size: 1.3rem;
+    padding-right: 1rem;
+}
+
+.factor > .info > .factor-chart {
+    width: 50%;
+    height: 15rem;
+}
+
+.extra {
+    width: 90%;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.extra > h4 {
+    font-size: 2rem;
+    padding-bottom: 1rem;
+    color: var(--purple);
+}
+
+.extra > p {
+    font-size: 1.3rem;
+}
 
 
 footer {
@@ -269,15 +329,58 @@ footer {
     font-size: 0.9rem;
 }
 
+@media only screen and (max-width: 430px) {
+    .logos {
+        display: flex;
+        flex-direction: column;
+    }
 
-@media only screen and (min-width: 401px) and (max-width: 960px) {
+    .intro {
+        width: 100%;
+        padding: 0 2rem 2rem 2rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .intro > h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--text);
+        margin-bottom: 1.5rem;
+    }
+
+    .intro > p {
+        font-size: 1.3rem;
+    }
+
+    .service {
+        margin-top: 0.5rem;
+    }
+
+    .extra > h4 {
+        font-size: 1.7rem;
+    }
+}
+
+@media only screen and (min-width: 431px) and (max-width: 960px) {
 
 }
   
 @media only screen and (min-width: 961px) and (max-width: 1200px) {
+    article {
+        width: 70%;
+    }
 
+    .gradient-bar {
+        width: 100%;
+    }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1201px) {
+    article {
+        width: 50%;
+    }
 
+    .gradient-bar {
+        width: 100%;
+    }
 }

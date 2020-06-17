@@ -224,6 +224,8 @@ window.addEventListener('load', async () => {
     serviceBtn.addEventListener('click', (event) => {
       if (serviceBtn.innerText == '서비스') {
         window.location.href = "/service";
+      } else if (serviceBtn.innerText == '키스톤') {
+        window.location.href = "/keystone";
       }
     });
   }

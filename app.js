@@ -34,3 +34,7 @@ app.get('/', (req, res) => {
 app.get('/service', (req, res) => {
   res.render('about.html');
 });
+
+app.get('/keystone', (req, res) => {
+  res.render('keystone.html');
+});
