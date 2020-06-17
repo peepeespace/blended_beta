@@ -14,7 +14,7 @@ const formatString = (stringValue, replacementsArray) => {
   return formatted;
 };
 
-const codelistURL = 'https://api.blended.kr/codelist';
+const codelistURL = 'https://api.blended.kr/codelist/all';
 const codeDataURL = 'https://api.blended.kr/adj_close/{0}';
 
 let CHART = {
