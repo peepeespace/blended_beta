@@ -99,7 +99,7 @@ const getDateFilteredCodeData = (codeData, filter) => {
 
 const main = async () => {
   const sparklineSection = CHART.sparklineSection;
-  CHART.codelist = await getCodelist('test');
+  CHART.codelist = await getCodelist('stock');
   CHART.totalCodeNum = CHART.codelist.length;
   let html = '';
   if (CHART.totalChartNumOnPage == 0) {
