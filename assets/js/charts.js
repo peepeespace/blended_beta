@@ -40,7 +40,6 @@ let CHART = {
 }
 
 const createSparkline = (chartID, width, height, data) => {
-  console.log(chartID);
   $(chartID).sparkline(data, {
     type: 'line',
     // barColor: 'green',
@@ -147,16 +146,22 @@ const addCharts = async () => {
   sparklineSection.insertAdjacentHTML('beforeend', html);
   for (let code of renderList) {
     let ticker = code.split('|')[0];
-    getCodeData(ticker).then((codeData) => {
-      CHART.chartDataDict[ticker] = codeData;
+    if (!(ticker in CHART.chartDataDict)) {
+      getCodeData(ticker).then((codeData) => {
+        CHART.chartDataDict[ticker] = codeData;
+        let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
+        createSparkline('#' + ticker, CHART.chartWidth, CHART.chartHeight, chartCodeData);
+      });
+    } else {
+      let codeData = CHART.chartDataDict[ticker];
       let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
-      createSparkline('#' + ticker, CHART.chartWidth, CHART.chartHeight, chartCodeData);
-    });
+      createSparkline('#' + ticker, CHART.chartWidth, CHART.chartHeight, chartCodeData);  
+    }
   }
   CHART.totalChartNumOnPage += CHART.chartNum;
 };
 
-const redrawPageCharts = () => {
+const redrawPageCharts = async () => {
   const sparklineSection = CHART.sparklineSection;
   let html = '';
   let from = 0;
@@ -175,11 +180,32 @@ const redrawPageCharts = () => {
   sparklineSection.insertAdjacentHTML('beforeend', html);
   for (let code of renderList) {
     let ticker = code.split('|')[0];
-    let codeData = CHART.chartDataDict[ticker];
-    let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
-    createSparkline('#' + ticker, CHART.chartWidth, CHART.chartHeight, chartCodeData);
+    if (!(ticker in CHART.chartDataDict)) {
+      getCodeData(ticker).then((codeData) => {
+        CHART.chartDataDict[ticker] = codeData;
+        let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
+        createSparkline('#' + ticker, CHART.chartWidth, CHART.chartHeight, chartCodeData);
+      });
+    } else {
+      let codeData = CHART.chartDataDict[ticker];
+      let chartCodeData = getDateFilteredCodeData(codeData, CHART.dateFilter);
+      createSparkline('#' + ticker, CHART.chartWidth, CHART.chartHeight, chartCodeData);  
+    }
   }
 };
+
+const changeCodelist = async (type) => {
+  CHART.codelist = await getCodelist(type);
+  CHART.totalCodeNum = CHART.codelist.length;
+  if (CHART.codelist.length < CHART.chartNum) {
+    CHART.totalChartNumOnPage = CHART.codelist.length;
+  } else if (CHART.totalCodeNum >= CHART.chartNum * 2) {
+    CHART.totalChartNumOnPage = CHART.chartNum * 2;
+  } else {
+    CHART.totalChartNumOnPage = CHART.chartNum;
+  }
+  redrawPageCharts();
+}
 
 //////////////////////
 ///// MAIN EVENT /////
@@ -256,7 +282,15 @@ window.addEventListener('load', async () => {
 
   for (let btn of marketTypeBtns) {
     btn.addEventListener('click', (event) => {
-      console.log(btn.innerText);
+      if (btn.innerText == '주식') {
+        changeCodelist('stock');
+      } else if (btn.innerText == 'ETF') {
+        changeCodelist('etf');
+      } else if (btn.innerText == '스팩') {
+        changeCodelist('spac');
+      } else if (btn.innerText == '전체') {
+        changeCodelist('all');
+      }
     });
   }
 
