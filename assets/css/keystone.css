@@ -103,6 +103,7 @@ header {
 
 .logos > p {
     font-size: 1.5rem;
+    color: var(--text);
 }
 
 .logos > img {
