@@ -1,0 +1,196 @@
+:root {
+    --background: #fafafa;
+    --border: #dedede;
+    --text: #333333;
+    --text-light: #6e6e6e;
+    --logo-shadow: #cfe3ff;
+    --purple: #6c5ce7;
+    --light-purple: #b9b0ff;
+    --green: #00cec9;
+    --pink: #fd79a8;
+    --orange: #fdcb6e;
+    --shade-text-pink: #ff7675;
+    --main-font: 'Noto Sans KR', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%; /* 16px이 100%, 62.5%는 10px */
+    background: var(--background);
+}
+
+body {
+    color: var(--text);
+    font-family: var(--main-font);
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+::-moz-selection {
+    color: var(--shade-text-pink);
+    background: var(--orange);
+}
+  
+::selection {
+    color: var(--shade-text-pink);
+    background: var(--orange);
+}
+
+/* main container */
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    margin-top: 1.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logos {
+    width: 100%;
+    padding-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.logos > h2 {
+    background: rgb(108,92,231);
+    background: linear-gradient(90deg, rgba(108,92,231,1) 12%, rgba(0,206,201,1) 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 3.5rem;
+    font-weight: bold;
+    font-style: italic;
+    cursor: pointer;
+    -webkit-filter: drop-shadow(1px 1px var(--logo-shadow))
+                    drop-shadow(1.25px 1.25px var(--logo-shadow))
+                    drop-shadow(1.5px 1.5px var(--logo-shadow))
+                    drop-shadow(1.75px 1.75px var(--logo-shadow))
+                    drop-shadow(2px 2px var(--logo-shadow))
+                    drop-shadow(2.25px 2.25px var(--logo-shadow));
+            filter: drop-shadow(1px 1px var(--logo-shadow))
+                    drop-shadow(1.25px 1.25px var(--logo-shadow))
+                    drop-shadow(1.5px 1.5px var(--logo-shadow))
+                    drop-shadow(1.75px 1.75px var(--logo-shadow))
+                    drop-shadow(2px 2px var(--logo-shadow))
+                    drop-shadow(2.25px 2.25px var(--logo-shadow));
+}
+
+article {
+    width: 100%;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+}
+
+.gradient-bottom-bar {
+    width: 100%;
+    height: 0.5rem;
+    background: rgb(0,206,201);
+    background: linear-gradient(105deg, rgba(0,206,201,1) 12%, rgba(253,121,168,1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    bottom: 0;
+    padding: 1.5rem 0;
+    background: #f0f0f0;
+    width: 100%;
+    color: #525252;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-content {
+    width: 90%;
+    font-size: 1.2rem;
+}
+
+.desc {
+    font-size: 0.9rem;
+}
+
+@media only screen and (max-width: 430px) {
+    .logos {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .intro {
+        width: 100%;
+        padding: 0 2rem 2rem 2rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .intro > h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--text);
+        margin-bottom: 1.5rem;
+    }
+
+    .intro > p {
+        font-size: 1.3rem;
+    }
+
+    .service {
+        margin-top: 0.5rem;
+    }
+
+    .extra > h4 {
+        font-size: 1.7rem;
+    }
+}
+
+@media only screen and (min-width: 431px) and (max-width: 960px) {
+
+}
+  
+@media only screen and (min-width: 961px) and (max-width: 1200px) {
+    article {
+        width: 70%;
+    }
+
+    .gradient-bar {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 1201px) {
+    article {
+        width: 50%;
+    }
+
+    .gradient-bar {
+        width: 100%;
+    }
+}

@@ -8,7 +8,8 @@ module.exports = {
     entry: {
         charts: ['@babel/polyfill', './assets/js/charts.js'],
         about: ['@babel/polyfill', './assets/js/about.js'],
-        keystone: ['@babel/polyfill', './assets/js/keystone.js']
+        keystone: ['@babel/polyfill', './assets/js/keystone.js'],
+        portfolio: ['@babel/polyfill', './assets/js/portfolio.js']
     },
     devServer: {
         contentBase: './dist'
@@ -65,6 +66,11 @@ module.exports = {
       new HtmlWebpackPlugin({
         filename: 'keystone.html',
         template: './templates/keystone.html',
+        inject: false
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'portfolio.html',
+        template: './templates/portfolio.html',
         inject: false
       }),
       new MiniCssExtractPlugin({filename: '[name].min.css'})

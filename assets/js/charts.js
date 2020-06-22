@@ -226,6 +226,8 @@ window.addEventListener('load', async () => {
         window.location.href = "/service";
       } else if (serviceBtn.innerText == '키스톤') {
         window.location.href = "/keystone";
+      } else if (serviceBtn.innerText == '블로그') {
+        window.location.href = "https://peepeespace.com";
       }
     });
   }
