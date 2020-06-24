@@ -50,6 +50,27 @@ app.get('/codelist/:type', async (req, res) => {
   res.json(codelist);
 });
 
+app.get('/codelist/sejong/:type', async (req, res) => {
+  let type = req.params.type;
+  let codelist;
+  if (type == 'all') {
+    codelist = await r.getList('sj_codelist', 'str');
+  } else if (type == 'stock') {
+    codelist = await r.getList('sj_stock_codelist', 'str');
+  } else if (type == 'etf') {
+    codelist = await r.getList('sj_etf_codelist', 'str');
+  } else if (type == 'putcall') {
+    codelist = await r.getList('sj_putcall_codelist', 'str');
+  } else if (type == 'spac') {
+    codelist = await r.getList('sj_spac_codelist', 'str');
+  } else if (type == 'etn') {
+    codelist = await r.getList('sj_etn_codelist', 'str')
+  } else if (type == 'test') {
+    codelist = await r.getList('test_codelist', 'str');
+  }
+  res.json(codelist);
+});
+
 app.get('/adj_close/:code', async (req, res) => {
   let code = req.params.code;
   let jsonData = await r.redisClient.get(code);
