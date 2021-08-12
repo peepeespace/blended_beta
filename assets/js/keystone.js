@@ -6,9 +6,9 @@ import Exporting from 'highcharts/modules/exporting';
 
 Exporting(Highcharts);
 
-const indexAPI = 'https://api.blended.kr/close_by_date/KeystIndex';
-const scaledIndexBmAPI = 'https://api.blended.kr/close_by_date/KeystScaledIndexWithBM';
-const indexFactorsAPI = 'https://api.blended.kr/close_by_date/KeystIndexFactors';
+const indexAPI = 'https://api.blended.kr/keyst/KeystIndex';
+const scaledIndexBmAPI = 'https://api.blended.kr/keyst/KeystScaledIndexWithBM';
+const indexFactorsAPI = 'https://api.blended.kr/keyst/KeystIndexFactors';
 
 const formatString = (stringValue, replacementsArray) => {
   let formatted = stringValue;
@@ -21,7 +21,7 @@ const formatString = (stringValue, replacementsArray) => {
 
 const getIndexData = async () => {
   const res = await Axios.get(indexAPI);
-  const rawData = Object.entries(res.data.KeystIndex);
+  const rawData = Object.entries(res.data.data.KeystIndex);
   let chartData = [];
   for (let data of rawData) {
     let date = Date.UTC(data[0].slice(0, 4), Number(data[0].slice(4, 6))-1, data[0].slice(6));
@@ -32,8 +32,8 @@ const getIndexData = async () => {
 
 const getScaledIndexData = async () => {
   const res = await Axios.get(scaledIndexBmAPI);
-  const indexRawData = Object.entries(res.data['Index_scaled']);
-  const bmRawData = Object.entries(res.data['KS11_c']);
+  const indexRawData = Object.entries(res.data.data['Index_scaled']);
+  const bmRawData = Object.entries(res.data.data['KS11_c']);
   let indexChartData = [];
   let bmChartData = [];
   for (let i = 0; i < indexRawData.length; i++) {
@@ -48,10 +48,10 @@ const getScaledIndexData = async () => {
 
 const getIndexFactorsAPI = async () => {
   const res = await Axios.get(indexFactorsAPI);
-  const realEconData = Object.entries(res.data['real_econ']);
-  const indEconData = Object.entries(res.data['ind_econ']);
-  const currencyData = Object.entries(res.data['currency']);
-  const riskData = Object.entries(res.data['risk']);
+  const realEconData = Object.entries(res.data.data['real_econ']);
+  const indEconData = Object.entries(res.data.data['ind_econ']);
+  const currencyData = Object.entries(res.data.data['currency']);
+  const riskData = Object.entries(res.data.data['risk']);
   let realEconChartData = [];
   let indEconChartData = [];
   let currencyChartData = [];
