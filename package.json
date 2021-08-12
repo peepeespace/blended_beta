@@ -4,6 +4,7 @@
   "description": "website with beautiful / straightforward financial data",
   "main": "webpack.config.js",
   "scripts": {
+    "start": "node app.js",
     "build": "webpack",
     "watch": "webpack --watch",
     "devserver": "webpack-dev-server --open --progress"
